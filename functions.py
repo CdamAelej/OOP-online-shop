@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 import objects_lists
 import os
 import client

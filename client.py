@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 class Client:
     def __init__(self, numer, haslo, imie, nazwisko, plec, wiek, ilosc_zamowien, stan_konta):
         self.numer = numer

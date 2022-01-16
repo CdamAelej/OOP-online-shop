@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 import MaterialToBuy
 
 

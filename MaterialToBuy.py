@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 class MaterialToBuy:
     def __init__(self, autor_imie, autor_nazwisko, tytul, rok_wydania, liczba_stron, gatunek, rezyser_imie,
                  rezyser_nazwisko, aktor1_imie, aktor1_nazwisko, aktor2_imie, aktor2_nazwisko, aktor3_imie,
