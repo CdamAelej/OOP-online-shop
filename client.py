@@ -20,3 +20,5 @@ class Client:
         print("Ilosc zamowien: " + str(self.ilosc_zamowien))
         print("Stan konta: " + str(self.stan_konta))
         print("\n")
+
+#    def doladuj_konto():
