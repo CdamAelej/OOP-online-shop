@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 from client import Client
 from objects_lists import material_set, user_set
 from sys import exit
