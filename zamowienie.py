@@ -1,3 +1,4 @@
+# copyright by Adam Celej
 class Zamowienie:
     def __init__(self, id_zamowienia, id_zamawiajacego, id_przedmiotu):
         self.id_zamowienia = id_zamowienia
