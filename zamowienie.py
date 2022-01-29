@@ -7,4 +7,3 @@ class Zamowienie:
 
     def __del__(self):
         print("Zamowienie zostalo anulowane")
-    # def zamow(self):
