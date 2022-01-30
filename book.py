@@ -7,6 +7,7 @@ class Ksiazka(MaterialToBuy):
         super().__init__(id_number, gatunek, autor_imie, autor_nazwisko, tytul, rok_wydania, cena, jest_dostepne, dostepna_liczba)
         self.__liczba_stron = liczba_stron
 
+    # uzywam dekoratorow dzieki czemu metody grzecznie zwracaja mi argumenty :)
     @property
     def liczba_stron(self):
         return self.__liczba_stron

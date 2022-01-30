@@ -15,6 +15,7 @@ class MaterialToBuy(ABC):
         self.__jest_dostepne = bool(jest_dostepne)
         self.__dostepna_liczba = dostepna_liczba
 
+    # uzywam dekoratorow dzieki czemu metody grzecznie zwracaja mi argumenty :)
     @property
     def id_number(self):
         return self.__id_number

@@ -52,8 +52,10 @@ class Client:
 
     def zmien_haslo(self):
         old_haslo = input("Podaj stare haslo: ")
+        # dopoki podane haslo nie jest rowne haslu uzytkownika to prosze o ponowne podanie hasla
         while old_haslo != self.__haslo:
             old_haslo = input("Nieprawidlowe haslo. Podaj stare haslo jeszcze raz: ")
+            # jesli podane haslo jest rowne staremu haslu to prosze uzytkownika o podanie nowego hasla
             if old_haslo == self.__haslo:
                 new_haslo = input("Podaj nowe haslo: ")
                 self.__haslo = new_haslo

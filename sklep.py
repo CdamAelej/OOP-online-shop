@@ -58,7 +58,7 @@ class Sklep:
                     dzialanie()
                 else:
                     print("Nie ma takiej opcji. Wybierz ponownie.")
-        elif self.logged_id != None:
+        elif self.logged_id is not None:
             while True:
                 self.menu_logged()
                 wybor = input("Wybierz operacje: ")
@@ -85,21 +85,28 @@ class Sklep:
 
     def logowanie(self):
         numer_klienta = int(input("Podaj swoje ID: "))
+        # szukam podanego id w liscie uzytkownikow
         for item in self.uzytkownicy:
+            # jesli znaleziono id to prosze o podanie hasla
             if item.numer == numer_klienta:
                 haslo = input("Podaj haslo: ")
+                # jesli haslo jest prawidlowe to loguje uzytkownika i wyswietlam menu dla zalogowanych
                 if haslo == item.haslo:
                     print("Jestes zalogowany jako " + item.imie + " " + item.nazwisko + "\n\n")
+                    # ustawiam klienta jako zalogowanego
                     self.logged_id = numer_klienta
                     self.wlacz()
+                # dopoki haslo nie jest prawidlowe to pytam uzytkownika czy chce ponowic probe
                 while haslo != item.haslo:
                     wybor = int(input(
                         "Haslo jest nieprawidlowe.\n Wybierz 1 aby wprowadzic haslo ponownie.\n Wybierz 0 aby przerwac akcje.\n"))
+                    # ponawiamy probe zalogowania
                     if wybor == 1:
                         haslo = input("Podaj haslo ponownie: ")
                         if haslo == item.haslo:
                             self.logged_id = numer_klienta
                             self.wlacz()
+                    # wyswietlam menu dla niezalogowanych
                     elif wybor == 0:
                         print("\n\n")
                         self.wlacz()
@@ -123,19 +130,23 @@ class Sklep:
 
     def zloz_zamowienie(self):
         wybrany_material = int(input("Wybierz obiekt ktory chcesz zamowic (podaj jego ID): "))
-        for item in self.przedmioty:  # szukam materialu o wybranym id w liscie materialow
+        # szukam materialu o wybranym id w liscie materialow
+        for item in self.przedmioty:
             if item.id_number == wybrany_material:
-                if self.uzytkownicy[
-                    self.logged_id].stan_konta >= item.cena:  # sprawdzam czy stan konta jest wiekszy od ceny materialu
-                    if item.jest_dostepne:  # sprawdzam czy material jest dostepny i zmniejszam dostepna liczbe o jeden
+                # sprawdzam czy stan konta jest wiekszy od ceny materialu
+                if self.uzytkownicy[self.logged_id].stan_konta >= item.cena:
+                    # sprawdzam czy material jest dostepny i zmniejszam dostepna liczbe o jeden
+                    if item.jest_dostepne:
                         item.zmniejsz_dostepna_liczbe()
+                        # jesli dostepna liczba jest rowna zero to przedmiot zmienia status na niedostepny
                         if item.dostepna_liczba == 0:
                             item.niedostepne()
-                        self.uzytkownicy[
-                            self.logged_id].stan_konta -= item.cena  # zmniejszam stan konta o cene materialu
+                        # zmniejszam stan konta o cene materialu, zwiekszam liczbe zamowien klienta
+                        self.uzytkownicy[self.logged_id].stan_konta -= item.cena
                         self.uzytkownicy[self.logged_id].zwieksz_liczbe_zamowien()
-                        self.listaZamowien.append(Zamowienie(len(self.listaZamowien), self.logged_id,
-                                                             wybrany_material))  # do listy zamowien dodaje nowy element/zamowienie skladajace sie z id zamowienia, id zamawiajacego oraz id zamawianego przedmiotu
+                        # do listy zamowien dodaje nowy obiekt klasy zamowienie skladajacy sie z id zamowienia,
+                        # id zamawiajacego oraz id zamawianego przedmiotu
+                        self.listaZamowien.append(Zamowienie(len(self.listaZamowien), self.logged_id, wybrany_material))
                         print("Zamowienie zlozone.\n")
                         return
                 else:
@@ -147,19 +158,19 @@ class Sklep:
     def anuluj_zamowienie(self):
         nr_zamowienia = int(input("Podaj id zamowienia ktore chcesz anulowac: "))
         for item in self.listaZamowien:
+            # sprawdzam czy obiekt jest klasy zamowienie
             assert isinstance(item, Zamowienie)
+            # jesli znaleziono obiekt to zmiejszam liczbe zamowien klienta oraz usuwam zamowienie
             if nr_zamowienia == item.id_zamowienia:
                 self.uzytkownicy[self.logged_id].zmniejsz_liczbe_zamowien()
                 self.listaZamowien.pop(item.id_zamowienia)
 
     def pokaz_zamowienia(self):
         for item in self.listaZamowien:
-            assert isinstance(item, Zamowienie)  # sprawdzamy i zapewniamy że item jest obiektem klasy Zamowienie
+            # sprawdzamy i zapewniamy że item jest obiektem klasy Zamowienie
+            assert isinstance(item, Zamowienie)
             print("Zamowienie nr " + str(item.id_zamowienia) + " zlozone przez uzytkownika o id " + str(
                 item.id_zamawiajacego) + " na przedmiot o id " + str(item.id_przedmiotu) + "\n")
-            """print(item.id_zamowienia)
-            print(item.id_zamawiajacego)
-            print(item.id_przedmiotu)"""
 
     def doladuj_konto(self):
         kwota = int(input("Podaj kwote ktora chcesz doladowac konto (jesli wpiszesz 0 operacja zostanie przerwana): "))
