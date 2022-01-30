@@ -8,3 +8,4 @@ Started creating class zamowienie responsible for orders management
 
 30 Jan 2022
 Added hermetization, properties and access methods
+Added some comments
