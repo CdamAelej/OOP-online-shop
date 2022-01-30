@@ -1,6 +1,10 @@
+29 Jan 2022
 Created class named Sklep responsible of menu and operation management which makes project more oop
 Deleted functions.py (all of this functions are in sklep.py)
 Added abc to MAterialToBuy class and @abstractmethod pokaz_pozycje
 Fixed constructors in child classes
 Expanded abstract method pokaz_pozycje in child classes
 Started creating class zamowienie responsible for orders management 
+
+30 Jan 2022
+Added hermetization, properties and access methods
