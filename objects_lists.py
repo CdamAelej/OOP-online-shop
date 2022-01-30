@@ -10,7 +10,7 @@ k2 = Ksiazka(22, 900, "Powiesc historyczna", "Henryk", "Sienkiewicz", "Pan Wolod
 f0 = Film(23, "Dramat historyczna", "Ridley", "Scott", "Gladiator", 2000, 155, True, True, 30, 30)
 material_set = [k0, k1, k2, f0]
 
-user0 = Client(0, "haslo_ale_nie_maslo", "Adam", "Celej", "mezczyzna", 20, 0, 0)
+user0 = Client(0, "haslo", "Adam", "Celej", "mezczyzna", 20, 0, 0)
 user1 = Client(1, "haslo_ale_maslo", "Adam", "Kokosza", "mezczyzna", 20, 0, 0)
 user2 = Client(3, "haslo123", "Julia", "Nowak", "kobieta", 22, 0, 0)
 user3 = Client(3, "RomaInvicra", "Alicja", "Kowalska", "kobieta", 16, 0, 0)

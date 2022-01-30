@@ -1,4 +1,3 @@
-# copyright by Adam Celej
 from client import Client
 from objects_lists import material_set, user_set
 from sys import exit
@@ -17,6 +16,7 @@ class Sklep:
             "3": self.wyjdz
         }
         self.wyborLogged = {
+            "0": self.zmiana_hasla,
             "1": self.pokaz_uzytkownikow,
             "2": self.pokaz_przedmioty,
             "3": self.pokaz_uzytkownikow_i_przedmioty,
@@ -37,6 +37,7 @@ class Sklep:
 
     def menu_logged(self):
         print("\n"
+              "0. Zmiana hasla\n"
               "1. Pokaz uzytkownikow\n"
               "2. Pokaz przedmioty\n"
               "3. Pokaz uzytkownikow i przedmioty\n"
@@ -103,6 +104,11 @@ class Sklep:
                         print("\n\n")
                         self.wlacz()
 
+    def zmiana_hasla(self):
+        for item in self.uzytkownicy:
+            if item.numer == self.logged_id:
+                item.zmien_haslo()
+
     def pokaz_uzytkownikow(self):
         for item in self.uzytkownicy:
             item.pokaz_clienta()
@@ -122,12 +128,14 @@ class Sklep:
                 if self.uzytkownicy[
                     self.logged_id].stan_konta >= item.cena:  # sprawdzam czy stan konta jest wiekszy od ceny materialu
                     if item.jest_dostepne:  # sprawdzam czy material jest dostepny i zmniejszam dostepna liczbe o jeden
-                        item.dostepna_liczba -= 1
+                        item.zmniejsz_dostepna_liczbe()
                         if item.dostepna_liczba == 0:
-                            item.jest_dostepne = False
+                            item.niedostepne()
                         self.uzytkownicy[
                             self.logged_id].stan_konta -= item.cena  # zmniejszam stan konta o cene materialu
-                        self.listaZamowien.append(Zamowienie(len(self.listaZamowien), self.logged_id, wybrany_material)) # do listy zamowien dodaje nowy element/zamowienie skladajace sie z id zamowienia, id zamawiajacego oraz id zamawianego przedmiotu
+                        self.uzytkownicy[self.logged_id].zwieksz_liczbe_zamowien()
+                        self.listaZamowien.append(Zamowienie(len(self.listaZamowien), self.logged_id,
+                                                             wybrany_material))  # do listy zamowien dodaje nowy element/zamowienie skladajace sie z id zamowienia, id zamawiajacego oraz id zamawianego przedmiotu
                         print("Zamowienie zlozone.\n")
                         return
                 else:
@@ -141,12 +149,14 @@ class Sklep:
         for item in self.listaZamowien:
             assert isinstance(item, Zamowienie)
             if nr_zamowienia == item.id_zamowienia:
+                self.uzytkownicy[self.logged_id].zmniejsz_liczbe_zamowien()
                 self.listaZamowien.pop(item.id_zamowienia)
 
     def pokaz_zamowienia(self):
         for item in self.listaZamowien:
-            assert isinstance(item, Zamowienie)
-            print("Zamowienie nr " + str(item.id_zamowienia) + " zlozone przez uzytkownika o id " + str(item.id_zamawiajacego) + " na przedmiot o id " + str(item.id_przedmiotu) + "\n")
+            assert isinstance(item, Zamowienie)  # sprawdzamy i zapewniamy że item jest obiektem klasy Zamowienie
+            print("Zamowienie nr " + str(item.id_zamowienia) + " zlozone przez uzytkownika o id " + str(
+                item.id_zamawiajacego) + " na przedmiot o id " + str(item.id_przedmiotu) + "\n")
             """print(item.id_zamowienia)
             print(item.id_zamawiajacego)
             print(item.id_przedmiotu)"""
